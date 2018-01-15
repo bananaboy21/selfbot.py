@@ -131,10 +131,20 @@ class Mod:
                     await message.delete()
 
     @commands.command()
-    async def clean(self, ctx, limit : int=15):
-        '''Clean a number of your own messages'''
-        await ctx.purge(limit=limit+1, check=lambda m: m.author == ctx.author)
-
+    async def clean(self, ctx, quantity: int):
+        ''' Clean a number of your own messages
+        Usage: {prefix}clean 5 '''
+        if quantity <= 15:
+            total = quantity +1
+            async for message in ctx.channel.history(limit=total):
+                if message.author == ctx.author:
+                    await message.delete()
+                    await asyncio.sleep(3.0)
+        else:
+            async for message in ctx.channel.history(limit=6):
+                if message.author == ctx.author:
+                    await message.delete()
+                    await asyncio.sleep(3.0)
 
     @commands.command()
     async def bans(self, ctx):
@@ -296,6 +306,7 @@ class Mod:
         emb = await self.format_mod_embed(ctx, ctx.author, success, 'server-lockdown', 0, server)
         progress.delete()
         await ctx.send(embed=emb)
+
 
 def setup(bot):
 	bot.add_cog(Mod(bot))
