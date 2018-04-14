@@ -173,13 +173,7 @@ class Selfbot(commands.Bot):
             return
         await self.invoke(ctx)
 
-    async def on_message(self, message):
-        '''Responds only to yourself'''
-        if message.author.id != self.user.id:
-            return
-        self.messages_sent += 1
-        self.last_message = time.time()
-        await self.process_commands(message)
+
     
     async def on_member_update(self, before, after):
         if before != self.user: return
