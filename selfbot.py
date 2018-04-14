@@ -131,7 +131,7 @@ class Selfbot(commands.Bot):
         selfbot = bot()
         safe_token = token or selfbot.token.strip('\"')
         try:
-            selfbot.run(safe_token, bot=False, reconnect=True)
+            selfbot.run(safe_token, bot=True, reconnect=True)
         except Exception as e:
             print(e)
 
@@ -172,14 +172,6 @@ class Selfbot(commands.Bot):
         if ctx.command is None:
             return
         await self.invoke(ctx)
-
-    async def on_message(self, message):
-        '''Responds only to yourself'''
-        if message.author.id != self.user.id:
-            return
-        self.messages_sent += 1
-        self.last_message = time.time()
-        await self.process_commands(message)
     
     async def on_member_update(self, before, after):
         if before != self.user: return
