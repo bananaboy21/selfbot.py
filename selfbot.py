@@ -131,7 +131,7 @@ class Selfbot(commands.Bot):
         selfbot = bot()
         safe_token = token or selfbot.token.strip('\"')
         try:
-            selfbot.run(safe_token, bot=False, reconnect=True)
+            selfbot.run(safe_token, bot=True, reconnect=True)
         except Exception as e:
             print(e)
 
